@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../Logo'
 import LogoutBtn from '../Header/LogoutBtn.jsx'
-import container from '../container/container.jsx'
+import Container from '../container/container.jsx'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -41,13 +41,13 @@ function Header() {
   ]
   return (
     <header className='py-3 shadow bg-gray-500'>
-      <container>
+      <Container>
         <nav className='flex'>
           <div className='mr-4'>
             <Link to='/'>
               <Logo width='70px'   />
 
-              </Link>
+            </Link>
           </div>
           <ul className='flex ml-auto'>
             {NavItems.map((item) => 
@@ -67,7 +67,7 @@ function Header() {
             )}
           </ul>
         </nav>
-        </container>
+        </Container>
     </header>
   )
 }
