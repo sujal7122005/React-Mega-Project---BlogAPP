@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
-import Butten from "../Butten.jsx";
-import Input from "../Input.jsx";
-import RTE from "../RTE.jsx";
-import Select from "../Select.jsx"; 
+import Butten from "./Butten.jsx";
+import Input from "./Input.jsx";
+import RTE from "./RTE.jsx";
+import Select from "./Select.jsx"; 
 import databaseservice from "../../src/AppWrite_Services/Database.js";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
