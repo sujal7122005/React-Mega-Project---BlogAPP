@@ -15,24 +15,48 @@ export class DatabaseService {
         this.storage = new Storage(this.Client);
     }
 
-    async CreateDocument({title, slug, content, featuredImage, status, userId}) {
+    // async CreateDocument({title, slug, content, featuredImage, status, userId}) {
+    //     try {
+    //         return await this.databases.createDocument(
+    //             config.appwriteDatabaseId,
+    //             config.appwriteCollectionId,
+    //             slug,
+    //             {
+    //                 title,
+    //                 content,
+    //                 featuredImage,
+    //                 status,
+    //                 userId
+    //             }
+    //         )
+    //     } catch (error) {
+    //         console.log("Appwrite service :: CreateDocument :: error", error);            
+    //     }
+    // }
+
+    
+
+    async CreateDocument({ tittle, slug, content, featuredImage, status, userId }) {
         try {
             return await this.databases.createDocument(
-                config.appwriteDatabaseId,
-                config.appwriteCollectionId,
+            config.appwriteDatabaseId,
+            config.appwriteCollectionId,
+            slug,
+            {
+                tittle,
                 slug,
-                {
-                    title,
-                    content,
-                    featuredImage,
-                    status,
-                    userId
-                }
-            )
+                content,
+                featuredImage,
+                status,
+                userId,
+            }
+            );
         } catch (error) {
-            console.log("Appwrite service :: CreateDocument :: error", error);            
+            console.log("Appwrite service :: CreateDocument :: error", error);
+            throw error;
         }
-    }
+        }
+
 
     async DeleteDocument(slug) {
         try {
@@ -48,14 +72,14 @@ export class DatabaseService {
         }
     }
 
-    async UpdateDocument(slug, {title, content, featuredImage, status}) {
+    async UpdateDocument(slug, {tittle, content, featuredImage, status}) {
         try {
             return await this.databases.updateDocument(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
                 slug,
                 {
-                    title,
+                    tittle,
                     content,
                     featuredImage,
                     status
@@ -96,7 +120,7 @@ export class DatabaseService {
 
     async UploadFile(file) {
         try {
-            await this.storage.createFile(
+            return await this.storage.createFile(
                 config.appwriteBucketId,
                 ID.unique(),
                 file

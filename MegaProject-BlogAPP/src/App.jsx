@@ -33,7 +33,7 @@ function App() {
       <div className='w-full block content-center'>
         <Header />
         <main>
-        TODO:  <Outlet />
+          <Outlet />
         </main>
         <Footer />
       </div>

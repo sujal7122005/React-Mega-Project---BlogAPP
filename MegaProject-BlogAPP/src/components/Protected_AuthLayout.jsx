@@ -12,8 +12,10 @@ function Protected_AuthLayout(
 
     useEffect(() => {
         if (Authenticated && !isLoggedIn) {
+            // User needs to be authenticated but is not logged in → redirect to login
             navigate('/login')
-        } else if (Authenticated && isLoggedIn) {
+        } else if (!Authenticated && isLoggedIn) {
+            // User doesn't need authentication (login/signup pages) but is already logged in → redirect to home
             navigate('/')
         }
         setLoading(false)
