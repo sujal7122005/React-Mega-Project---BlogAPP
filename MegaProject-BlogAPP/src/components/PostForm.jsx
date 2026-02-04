@@ -22,6 +22,34 @@ export default function PostForm({ post }) {
     const userData = useSelector((state) => state.auth.userData);
 
     const submit = async (data) => {
+        if (post) {
+            const file = data.image[0] ? await databaseservice.UploadFile(data.image[0]) : null;
+
+            if (file) {
+                databaseservice.DeleteFile(post.featuredImage);
+            }
+
+            const dbPost = await databaseservice.UpdateDocument(post.$id, {
+                ...data,
+                featuredImage: file ? file.$id : undefined,
+            });
+
+            if (dbPost) {
+                navigate(`/post/${dbPost.$id}`);
+            }
+        } else {
+            const file = await databaseservice.UploadFile(data.image[0]);
+
+            if (file) {
+                const fileId = file.$id;
+                data.featuredImage = fileId;
+                const dbPost = await databaseservice.CreateDocument({ ...data, userId: userData.$id });
+
+                if (dbPost) {
+                    navigate(`/post/${dbPost.$id}`);
+                }
+            }
+        }
     };
 
     const slugTransform = useCallback((value) => {
@@ -76,7 +104,7 @@ export default function PostForm({ post }) {
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={databaseservice.getFilePreview(post.featuredImage)}
+                            src={databaseservice.GetFilePreview(post.featuredImage)}
                             alt={post.title}
                             className="rounded-lg"
                         />

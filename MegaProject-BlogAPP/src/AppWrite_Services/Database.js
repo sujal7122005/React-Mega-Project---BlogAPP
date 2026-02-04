@@ -4,20 +4,20 @@ import { Client, ID, Databases, Storage, Query  } from "appwrite";
 
 export class DatabaseService {
     Client = new Client();
-    Databases;
-    Storage;
+    databases;
+    storage;
 
     constructor() {
         this.Client
             .setEndpoint(config.appwriteEndpoint)
             .setProject(config.appwriteProjectId);
-        this.Databases = new Databases(this.Client);
-        this.Storage = new Storage(this.Client);
+        this.databases = new Databases(this.Client);
+        this.storage = new Storage(this.Client);
     }
 
     async CreateDocument({title, slug, content, featuredImage, status, userId}) {
         try {
-            return await this.Databases.createDocument(
+            return await this.databases.createDocument(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
                 slug,
@@ -36,7 +36,7 @@ export class DatabaseService {
 
     async DeleteDocument(slug) {
         try {
-            return await this.Databases.deleteDocument(
+            return await this.databases.deleteDocument(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
                 slug
@@ -50,7 +50,7 @@ export class DatabaseService {
 
     async UpdateDocument(slug, {title, content, featuredImage, status}) {
         try {
-            return await this.Databases.updateDocument(
+            return await this.databases.updateDocument(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
                 slug,
@@ -68,7 +68,7 @@ export class DatabaseService {
 
     async GetDocument(slug) {
         try {
-            await this.Databases.getDocument(
+            await this.databases.getDocument(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
                 slug
@@ -81,7 +81,7 @@ export class DatabaseService {
 
     async ListDocuments(queries = [Query.equal("status", "active")]) {
         try {
-            return await this.Databases.listDocuments(
+            return await this.databases.listDocuments(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
                 queries
@@ -96,7 +96,7 @@ export class DatabaseService {
 
     async UploadFile(file) {
         try {
-            await this.Storage.createFile(
+            await this.storage.createFile(
                 config.appwriteBucketId,
                 ID.unique(),
                 file
@@ -109,7 +109,7 @@ export class DatabaseService {
 
     async DeleteFile(fileId) {
         try {
-            await this.Storage.deleteFile(
+            await this.storage.deleteFile(
                 config.appwriteBucketId,
                 fileId
             )
@@ -124,7 +124,7 @@ export class DatabaseService {
 
     async GetFilePreview(fileId) {
         try {
-            return this.Storage.getFilePreview(
+            return this.storage.getFilePreview(
                 config.appwriteBucketId,
                 fileId
             )

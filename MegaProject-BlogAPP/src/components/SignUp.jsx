@@ -15,37 +15,66 @@ function SignUp() {
     const [error, setError] = useState('');
     const { register, handleSubmit } = useForm();
 
-    const signup = async (data) => {
-        setError('');
-        try {
-            const user = await authservice.CreateAccount(data);
-            if (user) {
-                const userData = await authservice.GetCurrentUser();
-                if (userData) {
-                    dispatch(authlogin(userData));
-                    navigate('/');                   
-                }               
-            }
+    // const signup = async (data) => {
+    //     setError('');
+    //     try {
+    //         const user = await authservice.CreateAccount(data);
+    //         if (user) {
+    //             const userData = await authservice.GetCurrentUser();
+    //             if (userData) {
+    //                 dispatch(authlogin(userData));
+    //                 navigate('/');                   
+    //             }               
+    //         }
             
-        } catch (error) {
-            setError(error.message);
+    //     } catch (error) {
+    //         setError(error.message);
+    //     }
+    // }
+
+    const signup = async (data) => {
+    setError('');
+
+    try {
+        // 1️⃣ Create account
+        const user = await authservice.CreateAccount(
+            data.email,
+            data.password,
+            data.name
+            // data
+        );
+
+        if (user) {
+            // 2️⃣ Create session (login)
+            await authservice.Login(data.email, data.password);
+
+            // 3️⃣ Now get user data
+            const userData = await authservice.GetCurrentUser();
+             if (userData) {
+                dispatch(authlogin(userData));
+                navigate('/');
+                
+            }
         }
+
+    } catch (error) {
+        setError(error.message);
     }
+};
+
   return (
     <div className="flex items-center justify-center">
         <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
-        // Logo
+        
         <div className='mb-2 flex justify-center'>
             <span className='inline-block w-full max-w-100px'>
                 <Logo width='100%'/>
             </span>
 
         </div>
-        // Title-SignUp to your account
         <h2 className='text-center text-2xl font-bold          leading-tight' >
             Sign up to Create your account
         </h2>
-        // Link to Login
         <p className='mt-2 text-center text-base text-black/60'>
             Already have an account?&nbsp;
             <Link 
@@ -54,25 +83,24 @@ function SignUp() {
                 Login
             </Link>
         </p>
-        //error message
         {
         error &&
         <p className="text-red-600 mt-8 text-center">
             {error}
         </p>
         }
-        // Form
+        
         <form 
         onSubmit={handleSubmit(signup)}
         >
             <div className='space-y-5'>
-                // Name Input
+                
                 <Input 
                 label="Name"
                 placeholder="Enter your name"
                 {...register("name", {required: true})}
                 />
-                // Email Input
+                
                 <Input 
                 label="Email"
                 type="email"
@@ -84,17 +112,16 @@ function SignUp() {
                         "Email address must be a valid address"}, 
                 })}
                 />
-                // Password Input
+                
                 <Input 
                 label="Password"
                 placeholder="Enter your password"
                 type="password"
                 {...register("password", {required: true})}
                 />
-                // Submit Butten
                 <Butten
                 type="submit"
-                className='w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200'
+                className='w-full bg-blue-500 hover:bg-blue-600 text-white py-4 px-4 rounded-md transition duration-200'
                 >
                     Sign Up
                 </Butten>

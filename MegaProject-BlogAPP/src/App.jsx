@@ -20,9 +20,9 @@ function App() {
           dispatch(logout());
         }
       })
-      .catch((error) => {
-        console.log("No user logged in", error);
-      })
+      // .catch((error) => {
+      //   console.log("No user logged in", error);
+      // })
       .finally(() => {
         setLoading(false);
       });

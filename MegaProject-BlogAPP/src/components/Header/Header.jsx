@@ -5,12 +5,11 @@ import LogoutBtn from '../Header/LogoutBtn.jsx'
 import Container from '../container/container.jsx'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
-
-
+import Butten from '../Butten.jsx'
+// butten changed here 
 function Header() {
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.status);
 
   const NavItems = [
     {
@@ -53,14 +52,15 @@ function Header() {
             {NavItems.map((item) => 
             item.active ? (
               <li key={item.name}>
-                <button
+                <Butten
                 onClick={() => navigate(item.slug)}
-                className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
-                >{item.name}</button>
+                className='inline-bock px-6 py-2 m-1 duration-200 hover:bg-blue-100 rounded-full'
+                >{item.name}
+                </Butten>
               </li>
             ) : null
             )}
-            {authStatus && (
+            {isAuthenticated && (
               <li>
                 <LogoutBtn />
               </li>

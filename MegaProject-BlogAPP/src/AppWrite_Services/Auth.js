@@ -4,17 +4,17 @@ import { Client, Account, ID } from "appwrite";
 
 export class AuthService {
     Client = new Client();
-    Account;
+    account;
     constructor() {
         this.Client
             .setEndpoint(config.appwriteEndpoint)
             .setProject(config.appwriteProjectId);
-        this.Account = new Account(this.Client);
+        this.account = new Account(this.Client);
     }
 
     async CreateAccount(email, password, name) {
         try {
-            const userAccount = await this.Account.create(ID.unique(), email, password, name);
+            const userAccount = await this.account.create(ID.unique(), email, password, name);
             if (userAccount) {
                 //call another functionality
                 this.Login(email, password);
@@ -30,24 +30,36 @@ export class AuthService {
     
     async Login(email, password) {
         try {
-            return await this.Account.createEmailPasswordSession(email, password);
+            return await this.account.createEmailPasswordSession({email, password});
         } catch (error) {
             throw error;
         }
     }
 
     
+    // async Logout() {
+    //     try {
+
+    //         return await this.account.deleteSessions();
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
     async Logout() {
         try {
-            return await this.Account.deleteSessions();
+            const session = await this.account.get(); // check if session exists
+            if (session) {       
+                await this.account.deleteSessions();
+            }
         } catch (error) {
-            throw error;
+            console.log("User already logged out or no session", error);
         }
     }
+
     
     async GetCurrentUser() {
         try {
-            return await this.Account.get();
+            return await this.account.get();
         } catch (error) {
             throw error;
         }

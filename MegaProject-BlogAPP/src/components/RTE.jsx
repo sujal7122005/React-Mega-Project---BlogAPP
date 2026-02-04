@@ -1,6 +1,7 @@
 import React from 'react'
 import { Editor } from '@tinymce/tinymce-react';
 import { Controller } from 'react-hook-form';
+import config from '../config/config.js'
 // RTE Component for Rich Text Editing
 // Controller from react-hook-form is used to integrate the Editor with form state management
 
@@ -14,6 +15,7 @@ function RTE({ name, control, label, defaultValue = "" }) {
         defaultValue={defaultValue}
         render={({ field : {onChange}}) => (
           <Editor
+            apiKey={config.RTE_API_KEY}
             initialValue={defaultValue}
             init={{
                 height: 500,

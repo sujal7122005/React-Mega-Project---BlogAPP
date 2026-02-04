@@ -20,7 +20,7 @@ function Login() {
         try {
             const user = await authservice.Login(data.email, data.password);
             if (user) {
-                const userData = await authservice.GetUserData();
+                const userData = await authservice.GetCurrentUser();
                 if (userData) {
                     dispatch(authlogin(userData));
                     navigate('/');
@@ -34,37 +34,32 @@ function Login() {
   return (
     <div className='flex items-center justify-center w-full'>
         <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
-        // Logo
         <div className='mb-2 flex justify-center'>
             <span className='inline-block w-full max-w-100px'>
                 <Logo width='100%'/>
             </span>
         </div>
-        // Title-SignIn to your account
         <h2 className="text-center text-2xl font-bold leading-tight">
-            Sign in to your account
+            Login to your account
         </h2>
         <p className="mt-2 text-center text-base text-black/60">
                 Don&apos;t have any account?&nbsp;
                 <Link to="/signup" 
                 className="font-medium text-black hover:underline">
-                    Sign up
+                    Sign up 
                 </Link>
         </p>
-        //error message
         {
         error && 
         <p className="text-red-600 mt-8 text-center">
             {error}
         </p>
         }
-        // Form
         <form 
         onSubmit={handleSubmit(login)}
         className='mt-8'
         >
             <div className='space-y-5'>
-                // Email Input
                 <Input 
                 label="Email"
                 type="email"
@@ -76,19 +71,18 @@ function Login() {
                         "Email address must be a valid address"}, 
                 })}
                 />
-                // Password Input
                 <Input 
                 label="Password"
                 type="password"
                 placeholder="Enter your password"
                 {...register("password", { required: true })}
                 />
-                // Submit Butten
                 <Butten 
                 type="submit"
-                className="w-full"
-                text="Sign In"
-                />
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white py-4 px-4 rounded-md transition duration-200"
+                >
+                    Login                
+                </Butten>
 
             </div>
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import {useDispatch} from 'react-redux'
 import authservice from '../../AppWrite_Services/Auth.js'
+import { logout } from "../../ReduxConfiguration/authSlice.js";
 
 function LogoutBtn() {
   const dispatch=useDispatch();
@@ -8,7 +9,7 @@ function LogoutBtn() {
   const handleLogout=async()=>{
     authservice.Logout()
       .then(()=>{
-        dispatch(Logout());
+        dispatch(logout());
       })
       .catch((error)=>{
         console.log("Logout Error:",error);
