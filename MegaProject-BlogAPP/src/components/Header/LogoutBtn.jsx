@@ -20,7 +20,7 @@ function LogoutBtn() {
   return (
     <button
     onClick={handleLogout}
-    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+    className="bg-gradient-to-r from-rose-500 to-red-500 text-white font-medium px-5 py-2 rounded-lg hover:from-rose-600 hover:to-red-600 transition-all duration-200 shadow-md hover:shadow-lg"
     >Logout</button>
   )
 }

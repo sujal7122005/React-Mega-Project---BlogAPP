@@ -29,16 +29,18 @@ function App() {
   }, [])
   
   return !loading ? (
-    <div className='min-h-screen flex flex-wrap content-center bg-gray-700'>
-      <div className='w-full block content-center'>
-        <Header />
-        <main>
-          <Outlet />
-        </main>
-        <Footer />
-      </div>
+    <div className='min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-slate-100'>
+      <Header />
+      <main className='flex-grow'>
+        <Outlet />
+      </main>
+      <Footer />
     </div>
-  ) : null
+  ) : (
+    <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100'>
+      <div className='animate-spin rounded-full h-12 w-12 border-4 border-indigo-600 border-t-transparent'></div>
+    </div>
+  )
 }
 
 export default App

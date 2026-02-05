@@ -63,31 +63,30 @@ function SignUp() {
 };
 
   return (
-    <div className="flex items-center justify-center">
-        <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+    <div className='flex items-center justify-center w-full min-h-[80vh] py-12 px-4'>
+        <div className='mx-auto w-full max-w-md bg-white rounded-2xl p-8 shadow-xl border border-slate-100'>
         
-        <div className='mb-2 flex justify-center'>
-            <span className='inline-block w-full max-w-100px'>
+        <div className='mb-6 flex justify-center'>
+            <span className='inline-block w-20'>
                 <Logo width='100%'/>
             </span>
-
         </div>
-        <h2 className='text-center text-2xl font-bold          leading-tight' >
-            Sign up to Create your account
+        <h2 className='text-center text-3xl font-bold text-slate-800 mb-2'>
+            Create an account
         </h2>
-        <p className='mt-2 text-center text-base text-black/60'>
+        <p className='text-center text-slate-500 mb-8'>
             Already have an account?&nbsp;
             <Link 
             to='/login' 
-            className='font-medium text-primary transition-all duration-200 hover:underline'>
-                Login
+            className='font-semibold text-indigo-600 hover:text-indigo-700 transition-colors'>
+                Sign in
             </Link>
         </p>
         {
         error &&
-        <p className="text-red-600 mt-8 text-center">
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-6 text-center text-sm">
             {error}
-        </p>
+        </div>
         }
         
         <form 
@@ -96,15 +95,15 @@ function SignUp() {
             <div className='space-y-5'>
                 
                 <Input 
-                label="Name"
-                placeholder="Enter your name"
+                label="Full Name"
+                placeholder="John Doe"
                 {...register("name", {required: true})}
                 />
                 
                 <Input 
                 label="Email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="you@example.com"
                 {...register("email", { 
                     required: true,
                     validate: {matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
@@ -115,15 +114,15 @@ function SignUp() {
                 
                 <Input 
                 label="Password"
-                placeholder="Enter your password"
+                placeholder="Create a strong password"
                 type="password"
                 {...register("password", {required: true})}
                 />
                 <Butten
                 type="submit"
-                className='w-full bg-blue-500 hover:bg-blue-600 text-white py-4 px-4 rounded-md transition duration-200'
+                className='w-full py-3'
                 >
-                    Sign Up
+                    Create Account
                 </Butten>
             </div>
 

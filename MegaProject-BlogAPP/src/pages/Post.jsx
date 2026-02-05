@@ -34,34 +34,37 @@ export default function Post() {
     };
 
     return post ? (
-        <div className="py-8">
+        <div className="py-12">
             <Container>
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-                    <img
-                        src={databaseservice.GetFilePreview(post.featuredImage)}
-                        alt={post.title}
-                        className="rounded-xl"
-                    />
+                <article className="max-w-4xl mx-auto">
+                    <div className="w-full mb-8 relative rounded-2xl overflow-hidden shadow-lg">
+                        <img
+                            src={databaseservice.GetFilePreview(post.featuredImage)}
+                            alt={post.title}
+                            className="w-full h-400px object-cover"
+                        />
 
-                    {isAuthor && (
-                        <div className="absolute right-6 top-6">
-                            <Link to={`/edit-post/${post.$id}`}>
-                                <Butten bgColor="bg-green-500" className="mr-3">
-                                    Edit
+                        {isAuthor && (
+                            <div className="absolute right-4 top-4 flex gap-2">
+                                <Link to={`/edit-post/${post.$id}`}>
+                                    <Butten backgroundColor="bg-gradient-to-r from-emerald-500 to-green-500" className="shadow-lg">
+                                        Edit
+                                    </Butten>
+                                </Link>
+                                <Butten backgroundColor="bg-gradient-to-r from-rose-500 to-red-500" onClick={deletePost} className="shadow-lg">
+                                    Delete
                                 </Butten>
-                            </Link>
-                            <Butten bgColor="bg-red-500" onClick={deletePost}>
-                                Delete
-                            </Butten>
-                        </div>
-                    )}
-                </div>
-                <div className="w-full mb-6">
-                    <h1 className="text-2xl font-bold">{post.title}</h1>
-                </div>
-                <div className="browser-css">
-                    {parse(post.content)}
+                            </div>
+                        )}
                     </div>
+                    <div className="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                        {/* Note: Using 'tittle' to match the field name in database */}
+                        <h1 className="text-4xl font-bold text-slate-800 mb-6">{post.tittle}</h1>
+                        <div className="prose prose-lg prose-slate max-w-none browser-css">
+                            {parse(post.content)}
+                        </div>
+                    </div>
+                </article>
             </Container>
         </div>
     ) : null;

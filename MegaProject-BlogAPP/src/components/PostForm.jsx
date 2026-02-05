@@ -77,53 +77,58 @@ export default function PostForm({ post }) {
     }, [watch, slugTransform, setValue]);
 
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-            <div className="w-2/3 px-2">
+        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap bg-white rounded-2xl shadow-xl p-8 border border-slate-100">
+            <div className="w-full lg:w-2/3 px-2">
+                <h2 className="text-2xl font-bold text-slate-800 mb-6">{post ? 'Edit Post' : 'Create New Post'}</h2>
                 <Input
-                    label="tittle :"
-                    placeholder="Title"
+                    label="Title"
+                    placeholder="Enter your post title"
                     className="mb-4"
                     {...register("tittle", { required: true })}
                 />
                 <Input
-                    label="slug :"
-                    placeholder="Slug"
+                    label="Slug"
+                    placeholder="post-url-slug"
                     className="mb-4"
                     {...register("slug", { required: true })}
                     onInput={(e) => {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                <RTE label="content :" name="content" control={control} defaultValue={getValues("content")} />
+                <RTE label="Content" name="content" control={control} defaultValue={getValues("content")} />
             </div>
-            <div className="w-1/3 px-2">
-                <Input
-                    label="featuredImage :"
-                    type="file"
-                    className="mb-4"
-                    accept="image/png, image/jpg, image/jpeg, image/gif"
-                    {...register("image", { required: !post })}
-                />
-                {post && (
-                    <div className="w-full mb-4">
-                        <img
-                            src={databaseservice.GetFilePreview(post.featuredImage)}
-                            alt={post.tittle}
-                            className="rounded-lg"
-                        />
-                    </div>
-                )}
-                <Select
-                    options={["active", "inactive"]}
-                    label="Status"
-                    className="mb-4"
-                    {...register("status", { required: true })}
-                />
-                <Butten 
-                type="submit" 
-                backgroundColor={post ? "bg-green-500" : undefined} className="w-full">
-                    {post ? "Update" : "Submit"}
-                </Butten>
+            <div className="w-full lg:w-1/3 px-2 mt-6 lg:mt-0">
+                <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+                    <h3 className="text-lg font-semibold text-slate-700 mb-4">Post Settings</h3>
+                    <Input
+                        label="Featured Image"
+                        type="file"
+                        className="mb-4"
+                        accept="image/png, image/jpg, image/jpeg, image/gif"
+                        {...register("image", { required: !post })}
+                    />
+                    {post && (
+                        <div className="w-full mb-4 rounded-xl overflow-hidden">
+                            <img
+                                src={databaseservice.GetFilePreview(post.featuredImage)}
+                                alt={post.tittle}
+                                className="w-full h-48 object-cover"
+                            />
+                        </div>
+                    )}
+                    <Select
+                        options={["active", "inactive"]}
+                        label="Status"
+                        className="mb-6"
+                        {...register("status", { required: true })}
+                    />
+                    <Butten 
+                    type="submit" 
+                    backgroundColor={post ? "bg-gradient-to-r from-emerald-500 to-green-500" : undefined} 
+                    className="w-full py-3">
+                        {post ? "Update Post" : "Publish Post"}
+                    </Butten>
+                </div>
             </div>
         </form>
     );

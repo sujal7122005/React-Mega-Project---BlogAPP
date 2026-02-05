@@ -30,7 +30,8 @@ export class AuthService {
     
     async Login(email, password) {
         try {
-            return await this.account.createEmailPasswordSession({email, password});
+            // createEmailPasswordSession takes email and password as separate arguments
+            return await this.account.createEmailPasswordSession(email, password);
         } catch (error) {
             throw error;
         }
@@ -61,9 +62,10 @@ export class AuthService {
         try {
             return await this.account.get();
         } catch (error) {
-            throw error;
+            // Return null if no user is logged in instead of throwing
+            console.log("Appwrite service :: GetCurrentUser :: error", error);
+            return null;
         }
-        return null;
     }
 }
 

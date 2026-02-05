@@ -60,7 +60,7 @@ export class DatabaseService {
 
     async DeleteDocument(slug) {
         try {
-            return await this.databases.deleteDocument(
+            await this.databases.deleteDocument(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
                 slug
@@ -92,14 +92,14 @@ export class DatabaseService {
 
     async GetDocument(slug) {
         try {
-            await this.databases.getDocument(
+            return await this.databases.getDocument(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
                 slug
             )
         } catch (error) {
             console.log("Appwrite service :: GetDocument :: error", error);
-            
+            return null;
         }
     }
 
@@ -146,15 +146,16 @@ export class DatabaseService {
         }
     }
 
-    async GetFilePreview(fileId) {
-        try {
-            return this.storage.getFilePreview(
-                config.appwriteBucketId,
-                fileId
-            )
-        } catch (error) {
-            console.log("Appwrite service :: GetFilePreview :: error", error);
-        }
+    // GetFilePreview: Returns the file view URL (using getFileView instead of getFilePreview)
+    // Note: getFilePreview requires paid plan for image transformations
+    // getFileView returns the original file and works on free plan
+    GetFilePreview(fileId) {
+        if (!fileId) return null;
+        
+        return this.storage.getFileView(
+            config.appwriteBucketId,
+            fileId
+        );
     }
 
 }
