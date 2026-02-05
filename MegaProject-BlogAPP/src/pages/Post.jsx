@@ -40,7 +40,7 @@ export default function Post() {
                     <div className="w-full mb-8 relative rounded-2xl overflow-hidden shadow-lg">
                         <img
                             src={databaseservice.GetFilePreview(post.featuredImage)}
-                            alt={post.title}
+                            alt={post.tittle}
                             className="w-full h-400px object-cover"
                         />
 
