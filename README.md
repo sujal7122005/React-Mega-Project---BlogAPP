@@ -1,4 +1,4 @@
-# 📝 SupaBlog - React Blog Application
+# 📝 Pupple - React Blog Application
 
 A modern, full-featured blog application built with React and Appwrite. Create, edit, and share your stories with the world!
 
